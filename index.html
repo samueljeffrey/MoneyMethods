@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,600;0,800;1,200;1,400;1,600;1,800&display=swap" rel="stylesheet">
+    <title>MoneyMethods</title>
+  </head>
+  <body>
+    <section id="header">
+      <img id="desktop-title" src="desktoptitle.png" height="80px">
+      <img id="mobile-title" src="mobiletitle.png" height="80px">
+      <div class="nav-options">
+        <p><a href="#tax-feature">Tax</a></p>
+        <p><a href="#interest-feature">Interest</a></p>
+        <p><a href="#budget-feature">Budget</a></p>
+      </div>
+    </section>
+
+    <section class="description">
+      <p>Here you can find out your annual tax and take-home pay, calculate the effects of interest,
+      or even use our budget maker to help you decide how to spend your money.</p>
+    </section>
+
+    <hr>
+
+    <section class="main">
+      <div class="feature" id="tax-feature">
+        <h1>Tax Calculator</h1>
+        <div class="inputs-outputs" id="tax-input">
+          <input type="text" class="text-input" id="tax-salary" placeholder="Enter Gross Income">
+          <select class="select-input" id="tax-timeframe">
+            <option value="year">Per Year</option>
+            <option value="month">Per Month</option>
+            <option value="week">Per Week</option>
+          </select>
+          <button class="tax-input-button go-button">Go</button>
+        </div>
+
+        <div class="inputs-outputs" id="tax-output">
+          <h4 class="tax-sentences">Your gross income is £<span class="tax-numbers" id="tax-gross">0</span></h4>
+          <h4 class="tax-sentences">You pay £<span class="tax-numbers" id="tax-income-tax">0</span> in income tax</h4>
+          <h4 class="tax-sentences">You pay £<span class="tax-numbers" id="tax-n-i">0</span> as your national insurance contribution</h4>
+          <h4 class"tax-sentences">Your net income is £<span class="tax-numbers" id="tax-net">0</span></h4>
+          <div class="tax-more-buttons">
+            <button id="tax-timeframe-yearly" class="tax-timeframe-buttons">Yearly</button>
+            <button id="tax-timeframe-monthly" class="tax-timeframe-buttons">Monthly</button>
+            <button id="tax-timeframe-weekly" class="tax-timeframe-buttons">Weekly</button>
+          </div>
+          <button class="tax-back-button back-button">Back</button>
+        </div>
+      </div>
+
+      <div class="feature" id="interest-feature">
+        <h1>Interest Calculator</h1>
+        <div class="inputs-outputs" id="interest-input">
+          <input type="text" class="text-input">
+          <input type="text" class="text-input">
+          <button class="interest-input-button go-button">Go</button>
+        </div>
+
+        <div class="inputs-outputs" id="interest-output">
+          <button class="interest-back-button back-button">Back</button>
+        </div>
+      </div>
+
+      <div class="feature" id="budget-feature">
+        <h1>Budget Maker</h1>
+        <div class="inputs-outputs" id="budget-input">
+          <input type="text" class="text-input">
+          <input type="text" class="text-input">
+          <button class="budget-input-button go-button">Go</button>
+
+        </div>
+        <div class="inputs-outputs" id="budget-output">
+          <button class="budget-back-button back-button">Back</button>
+        </div>
+      </div>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>
