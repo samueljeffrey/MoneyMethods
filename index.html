@@ -30,6 +30,7 @@
       <div class="feature" id="tax-feature">
         <h1>Tax Calculator</h1>
         <div class="inputs-outputs" id="tax-input">
+          <label>Gross Income:</label>
           <input type="text" class="text-input" id="tax-salary" placeholder="Enter Gross Income">
           <select class="select-input" id="tax-timeframe">
             <option value="year">Per Year</option>
@@ -40,10 +41,10 @@
         </div>
 
         <div class="inputs-outputs" id="tax-output">
-          <h4 class="tax-sentences">Your gross income is £<span class="tax-numbers" id="tax-gross">0</span></h4>
-          <h4 class="tax-sentences">You pay £<span class="tax-numbers" id="tax-income-tax">0</span> in income tax</h4>
-          <h4 class="tax-sentences">You pay £<span class="tax-numbers" id="tax-n-i">0</span> as your national insurance contribution</h4>
-          <h4 class"tax-sentences">Your net income is £<span class="tax-numbers" id="tax-net">0</span></h4>
+          <h4 class="tax-sentences">Your gross income is £<span id="tax-gross">0</span></h4>
+          <h4 class="tax-sentences">You pay £<span id="tax-income-tax">0</span> in income tax</h4>
+          <h4 class="tax-sentences">You pay £<span id="tax-n-i">0</span> in national insurance contributions</h4>
+          <h4 class"tax-sentences">Your net income is £<span id="tax-net">0</span></h4>
           <div class="tax-more-buttons">
             <button id="tax-timeframe-yearly" class="tax-timeframe-buttons">Yearly</button>
             <button id="tax-timeframe-monthly" class="tax-timeframe-buttons">Monthly</button>
@@ -56,12 +57,34 @@
       <div class="feature" id="interest-feature">
         <h1>Interest Calculator</h1>
         <div class="inputs-outputs" id="interest-input">
-          <input type="text" class="text-input">
-          <input type="text" class="text-input">
+          <div class="interest-more-buttons">
+            <button id="interest-choice-compound" class="interest-choice-buttons">Compound</button>
+            <button id="interest-choice-simple" class="interest-choice-buttons">Simple</button>
+          </div>
+          <label>Initial amount:</label>
+          <input type="text" class="text-input" id="interest-initial" placeholder="Enter Initial Amount">
+          <label id="interest-rate-label">Interest rate (AER):</label>
+          <input type="text" class="text-input" id="interest-rate" placeholder="Enter Percentage">
+          <div id="interest-extra">
+            <label>Compound interval:</label>
+            <select class="select-input" id="interest-compound-interval">
+              <option value="year">Annually</option>
+              <option value="quarter">Quarterly</option>
+              <option value="month">Monthly</option>
+              <option value="week">Weekly</option>
+              <option value="day">Daily</option>
+            </select>
+            <label>Duration (months):</label>
+            <input type="text" class="text-input" id="interest-duration">
+          </div>
           <button class="interest-input-button go-button">Go</button>
         </div>
 
         <div class="inputs-outputs" id="interest-output">
+          <h4 class="interest-sentences">The starting value is £<span id="interest-starting">0</span></h4>
+          <h4 class="interest-sentences">The interest added is £<span id="interest-amount">0</span></h4>
+          <h4 class="interest-sentences">The ending value is £<span id="interest-ending">0</span></h4>
+          <h4 class="interest-sentences percentage-sentence">This is a <span id="interest-rise">0</span>% increase</h4>
           <button class="interest-back-button back-button">Back</button>
         </div>
       </div>
