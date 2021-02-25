@@ -19,12 +19,31 @@ let taxGrossIncome;
 let afterIncomeTax;
 let taxNetIncome;
 
+
+
 // INTEREST VARIABLES
 
 const interestInputBox = document.querySelector("#interest-input");
 const interestGoButton = document.querySelector(".interest-input-button");
 const interestOutputBox = document.querySelector("#interest-output");
 const interestBackButton = document.querySelector(".interest-back-button");
+const interestCompoundButton = document.querySelector("#interest-choice-compound");
+const interestSimpleButton = document.querySelector("#interest-choice-simple");
+const interestExtra = document.querySelector("#interest-extra");
+const interestInitialInput = document.querySelector("#interest-initial");
+const interestRateLabel = document.querySelector("#interest-rate-label");
+const interestRateInput = document.querySelector("#interest-rate");
+const interestCompoundInput = document.querySelector("#interest-compound-interval");
+const interestDurationInput = document.querySelector("#interest-duration");
+let interestInitial;
+let interestRate;
+let interestValue;
+let interestTotal;
+let interestDuration;
+let interestFactor;
+let interestSimpleStatus = false;
+
+
 
 // BUDGET VARIABLES
 
@@ -44,6 +63,8 @@ const original = function() {
   taxOutputBox.classList.add("hide");
   interestOutputBox.classList.add("hide");
   budgetOutputBox.classList.add("hide");
+  interestCompoundButton.style.backgroundColor = "#fc7703";
+  interestSimpleStatus = false;
 };
 
 original();
@@ -55,11 +76,11 @@ original();
 taxGoButton.addEventListener("click", function() {
   taxGrossIncome = 0;
   if (taxTimeframe.value === "week") {
-    taxGrossIncome += 52*taxSalary.value.replace(",", "");
+    taxGrossIncome += 52*taxSalary.value.replace(",", "").replace("£", "");
   } else if (taxTimeframe.value === "month") {
-    taxGrossIncome += 12*taxSalary.value.replace(",", "");
+    taxGrossIncome += 12*taxSalary.value.replace(",", "").replace("£", "");
   } else {
-    taxGrossIncome = Number(taxSalary.value.replace(",", ""));
+    taxGrossIncome = Number(taxSalary.value.replace(",", "").replace("£", ""));
   }
   taxGrossResult.textContent = Math.round(taxGrossIncome);
   afterIncomeTax = taxGrossIncome;
@@ -86,6 +107,8 @@ taxGoButton.addEventListener("click", function() {
   taxNIResult.textContent = Math.round(afterIncomeTax-taxNetIncome);
   taxNetResult.textContent = Math.round(taxNetIncome);
   taxYearlyButton.style.backgroundColor = "#f5f120";
+  taxMonthlyButton.style.backgroundColor = "#ffffff";
+  taxWeeklyButton.style.backgroundColor = "#ffffff";
   taxInputBox.classList.add("hide");
   taxOutputBox.classList.remove("hide");
 });
@@ -129,7 +152,60 @@ taxBackButton.addEventListener("click", function() {
 
 // INTEREST BUTTON CLICKS
 
+interestCompoundButton.addEventListener("click", function() {
+  interestCompoundButton.style.backgroundColor = "#fc7703";
+  interestSimpleButton.style.backgroundColor = "#ffffff";
+  interestExtra.classList.remove("hide");
+  interestRateLabel.textContent = "Interest rate (AER):";
+  interestSimpleStatus = false;
+});
+
+interestSimpleButton.addEventListener("click", function() {
+  interestSimpleButton.style.backgroundColor = "#fc7703";
+  interestCompoundButton.style.backgroundColor = "#ffffff";
+  interestExtra.classList.add("hide");
+  interestRateLabel.textContent = "Interest rate:";
+  interestSimpleStatus = true;
+});
+
 interestGoButton.addEventListener("click", function() {
+  interestInitial = Number(interestInitialInput.value.replace(",", "").replace("£", ""));
+  interestRate = Number(interestRateInput.value.replace("%", ""));
+
+  if (interestSimpleStatus) {
+    interestTotal = (1 + interestRate/100)*interestInitial;
+    interestValue = interestTotal-interestInitial;
+
+    document.querySelector("#interest-starting").textContent = interestInitial.toFixed(2);
+    document.querySelector("#interest-amount").textContent = interestValue.toFixed(2);
+    document.querySelector("#interest-ending").textContent = interestTotal.toFixed(2);
+    document.querySelector(".percentage-sentence").classList.add("hide");
+
+  } else {
+    interestValue = 0;
+    interestDuration = interestDurationInput.value/12;
+    interestFactor = 1 + (interestRate/100);
+
+    if (interestCompoundInput.value === "year") {
+      interestTotal = interestInitial * Math.pow(interestFactor, interestDuration);
+    } else if (interestCompoundInput.value === "quarter") {
+      interestTotal = interestInitial * Math.pow((interestFactor-1)/4+1, interestDuration*4);
+    } else if (interestCompoundInput.value === "month") {
+      interestTotal = interestInitial * Math.pow((interestFactor-1)/12+1, interestDuration*12);
+    } else if (interestCompoundInput.value === "week") {
+      interestTotal = interestInitial * Math.pow((interestFactor-1)/52+1, interestDuration*52);
+    } else if (interestCompoundInput.value === "day") {
+      interestTotal = interestInitial * Math.pow((interestFactor-1)/365+1, interestDuration*365);
+    }
+
+    interestValue = interestTotal - interestInitial;
+    document.querySelector("#interest-starting").textContent = interestInitial.toFixed(2);
+    document.querySelector("#interest-amount").textContent = interestValue.toFixed(2);
+    document.querySelector("#interest-ending").textContent = interestTotal.toFixed(2);
+    document.querySelector("#interest-rise").textContent = ((interestValue/interestInitial)*100).toFixed(1);
+    document.querySelector(".percentage-sentence").classList.remove("hide");
+  }
+
   interestInputBox.classList.add("hide");
   interestOutputBox.classList.remove("hide");
 });
