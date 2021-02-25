@@ -9,6 +9,8 @@ body {
   display: none;
 }
 
+
+
 /* HEADER */
 
 #header {
@@ -74,6 +76,7 @@ hr {
   text-decoration: none;
   display: block;
   margin: 10px auto;
+  outline: none;
 }
 
 .go-button:hover {
@@ -94,6 +97,7 @@ hr {
   text-decoration: none;
   display: block;
   margin: 10px auto;
+  outline: none;
 }
 
 .back-button:hover {
@@ -109,6 +113,7 @@ hr {
   height: 20px;
   margin: 10px auto;
   display: block;
+  outline: none;
 }
 
 .select-input {
@@ -118,6 +123,7 @@ hr {
   margin: 10px auto;
   width: 158px;
   display: block;
+  outline: none;
 }
 
 
@@ -133,7 +139,6 @@ hr {
 }
 
 #tax-output {
-  text-align: left;
   padding-top: 10px;
   padding-bottom: 30px;
 }
@@ -142,7 +147,11 @@ hr {
   color: #7000cc;
 }
 
-.tax-numbers {
+#tax-income-tax {
+  color: #ff0000;
+}
+
+#tax-n-i {
   color: #ff0000;
 }
 
@@ -162,11 +171,12 @@ hr {
   font-size: 0.8rem;
   color: #000000;
   background: #ffffff;
-  padding: 2px 6px;
+  padding: 4px 6px;
   border: solid #000000 3px;
   text-decoration: none;
   margin: 0 3px;
   width: 62px;
+  outline: none;
 }
 
 .tax-timeframe-buttons:hover {
@@ -183,6 +193,48 @@ hr {
 
 .interest-input-button {
   background: #8ee327;
+}
+
+#interest-starting {
+  color: #fc7703;
+}
+
+#interest-amount {
+  color: #07c700;
+  font-size: 1.5rem;
+}
+
+#interest-ending {
+  color: #fc7703;
+  font-size: 1.5rem;
+}
+
+#interest-rise {
+  color: #07c700;
+}
+
+.interest-more-buttons {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.interest-choice-buttons {
+  -webkit-border-radius: 5;
+  -moz-border-radius: 5;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  color: #000000;
+  background: #ffffff;
+  padding: 4px 6px;
+  border: solid #000000 3px;
+  text-decoration: none;
+  margin: 0 3px;
+  width: 84px;
+  outline: none;
+}
+
+.interest-choice-buttons:hover {
+  cursor: pointer;
 }
 
 
