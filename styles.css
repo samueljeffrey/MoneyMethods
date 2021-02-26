@@ -249,6 +249,76 @@ hr {
   background: #1ebbd4;
 }
 
+.budget-extra-button {
+  -webkit-border-radius: 5;
+  -moz-border-radius: 5;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  color: #000000;
+  background: #ff61b0;
+  padding: 2px;
+  border: solid #000000 3px;
+  text-decoration: none;
+  width: 160px;
+  outline: none;
+}
+
+.budget-extra-button:hover {
+  background: #fc1776;
+  cursor: pointer;
+}
+
+.budget-instruction {
+  font-size: 1rem;
+  margin: 8px auto 0;
+}
+
+.budget-input-table {
+  display: grid;
+  grid-template-columns: 58% 42%;
+  grid-template-rows: 35px 35px 35px 35px 35px;
+  text-align: left;
+}
+
+.budget-labels {
+  padding-top: 14px;
+}
+
+.narrow-input {
+  width: 84px;
+  border-radius: 5px;
+  border: 3px black solid;
+  height: 20px;
+  margin: 10px auto;
+  display: block;
+  outline: none;
+}
+
+.budget-results-divided {
+  height: 300px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 20% 80%;
+}
+
+.budget-graph {
+  margin: 0;
+  padding: 0;
+  height: 300px;
+  border-radius: 3px;
+}
+
+.budget-graph-item {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+.budget-results-words {
+  padding-top: 25px;
+  text-align: right;
+}
+
 
 
 /* MEDIA QUERIES */
