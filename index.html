@@ -21,7 +21,7 @@
 
     <section class="description">
       <p>Here you can find out your annual tax and take-home pay, calculate the effects of interest,
-      or even use our budget maker to help you decide how to spend your money.</p>
+      or even use our budget maker to help you plan how to spend your money.</p>
     </section>
 
     <hr>
@@ -75,7 +75,7 @@
               <option value="day">Daily</option>
             </select>
             <label>Duration (months):</label>
-            <input type="text" class="text-input" id="interest-duration">
+            <input type="text" class="text-input" id="interest-duration" placeholder="Enter number of months">
           </div>
           <button class="interest-input-button go-button">Go</button>
         </div>
@@ -90,14 +90,78 @@
       </div>
 
       <div class="feature" id="budget-feature">
-        <h1>Budget Maker</h1>
+        <h1>Monthly Budget</h1>
         <div class="inputs-outputs" id="budget-input">
-          <input type="text" class="text-input">
-          <input type="text" class="text-input">
+          <label>Net Monthly Income:</label>
+          <input type="text" class="text-input" placeholder="Enter monthly income" id="budget-income-input">
+          <button class="budget-extra-button">Copy from tax calculator</button>
+          <p class="budget-instruction">Enter monthly amounts:</p>
+          <div class="budget-input-table">
+            <div class="budget-labels">
+              <label>Saving Goal:</label>
+            </div>
+            <div>
+              <input type="text" class="narrow-input" placeholder="Enter amount" id="budget-saving-input">
+            </div>
+            <div class="budget-labels">
+              <label>Household:</label>
+            </div>
+            <div>
+              <input type="text" class="narrow-input" placeholder="Enter amount" id="budget-household-input">
+            </div>
+            <div class="budget-labels">
+              <label>Transport:</label>
+            </div>
+            <div>
+              <input type="text" class="narrow-input" placeholder="Enter amount" id="budget-transport-input">
+            </div>
+            <div class="budget-labels">
+              <label>Groceries:</label>
+            </div>
+            <div>
+              <input type="text" class="narrow-input" placeholder="Enter amount" id="budget-groceries-input">
+            </div>
+            <div class="budget-labels">
+              <label for="">Commitments:</label>
+            </div>
+            <div>
+              <input type="text" class="narrow-input" placeholder="Enter amount" id="budget-commitments-input">
+            </div>
+          </div>
           <button class="budget-input-button go-button">Go</button>
 
         </div>
         <div class="inputs-outputs" id="budget-output">
+          <div class="budget-results-divided">
+            <div class="budget-graph">
+              <div class="budget-graph-free budget-graph-item">
+
+              </div>
+              <div class="budget-graph-commitments budget-graph-item">
+
+              </div>
+              <div class="budget-graph-groceries budget-graph-item">
+
+              </div>
+              <div class="budget-graph-transport budget-graph-item">
+
+              </div>
+              <div class="budget-graph-household budget-graph-item">
+
+              </div>
+              <div class="budget-graph-saving budget-graph-item">
+
+              </div>
+            </div>
+            <div class="budget-results-words">
+              <h5 class="budget-result-free"></h5>
+              <h5 class="budget-result-commitments"></h5>
+              <h5 class="budget-result-groceries"></h5>
+              <h5 class="budget-result-transport"></h5>
+              <h5 class="budget-result-household"></h5>
+              <h5 class="budget-result-saving"></h5>
+            </div>
+          </div>
           <button class="budget-back-button back-button">Back</button>
         </div>
       </div>
