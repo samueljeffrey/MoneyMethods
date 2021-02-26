@@ -49,8 +49,41 @@ let interestSimpleStatus = false;
 
 const budgetInputBox = document.querySelector("#budget-input");
 const budgetGoButton = document.querySelector(".budget-input-button");
+const budgetCopyButton = document.querySelector(".budget-extra-button");
 const budgetOutputBox = document.querySelector("#budget-output");
 const budgetBackButton = document.querySelector(".budget-back-button");
+const budgetIncomeInput = document.getElementById("budget-income-input");
+const budgetSavingInput = document.getElementById("budget-saving-input");
+const budgetHouseholdInput = document.getElementById("budget-household-input");
+const budgetTransportInput = document.getElementById("budget-transport-input");
+const budgetGroceriesInput = document.getElementById("budget-groceries-input");
+const budgetCommitmentsInput = document.getElementById("budget-commitments-input");
+let budgetTotal;
+let budgetSavingAmount;
+let budgetSavingPercentage;
+let budgetHouseholdAmount;
+let budgetHouseholdPercentage;
+let budgetTransportAmount;
+let budgetTransportPercentage;
+let budgetGroceriesAmount;
+let budgetGroceriesPercentage;
+let budgetCommitmentsAmount;
+let budgetCommitmentsPercentage;
+let budgetFreeAmount;
+let budgetFreePercentage;
+const budgetGraphSaving = document.querySelector(".budget-graph-saving");
+const budgetGraphHousehold = document.querySelector(".budget-graph-household");
+const budgetGraphTransport = document.querySelector(".budget-graph-transport");
+const budgetGraphGroceries = document.querySelector(".budget-graph-groceries");
+const budgetGraphCommitments = document.querySelector(".budget-graph-commitments");
+const budgetGraphFree = document.querySelector(".budget-graph-free");
+const budgetResultSaving = document.querySelector(".budget-result-saving");
+const budgetResultHousehold = document.querySelector(".budget-result-household");
+const budgetResultTransport = document.querySelector(".budget-result-transport");
+const budgetResultGroceries = document.querySelector(".budget-result-groceries");
+const budgetResultCommitments = document.querySelector(".budget-result-commitments");
+const budgetResultFree = document.querySelector(".budget-result-free");
+const budgetResults = document.querySelector(".budget-results-divided");
 
 
 
@@ -219,7 +252,70 @@ interestBackButton.addEventListener("click", function() {
 
 // BUDGET BUTTON CLICKS
 
+budgetCopyButton.addEventListener("click", function() {
+  if (taxNetIncome > 0) {
+    budgetIncomeInput.value = "£" + Math.round(taxNetIncome/12);
+  }
+});
+
 budgetGoButton.addEventListener("click", function() {
+  budgetTotal = Math.round(budgetIncomeInput.value.replace("£", ""));
+  budgetSavingAmount = Math.round(budgetSavingInput.value.replace("£", ""));
+  budgetHouseholdAmount = Math.round(budgetHouseholdInput.value.replace("£", ""));
+  budgetTransportAmount = Math.round(budgetTransportInput.value.replace("£", ""));
+  budgetGroceriesAmount = Math.round(budgetGroceriesInput.value.replace("£", ""));
+  budgetCommitmentsAmount = Math.round(budgetCommitmentsInput.value.replace("£", ""));
+  budgetFreeAmount = budgetTotal - budgetSavingAmount - budgetHouseholdAmount
+    - budgetTransportAmount - budgetGroceriesAmount - budgetCommitmentsAmount;
+
+  budgetSavingPercentage = Math.round(budgetSavingAmount/budgetTotal*100);
+  budgetHouseholdPercentage = Math.round(budgetHouseholdAmount/budgetTotal*100);
+  budgetTransportPercentage = Math.round(budgetTransportAmount/budgetTotal*100);
+  budgetGroceriesPercentage = Math.round(budgetGroceriesAmount/budgetTotal*100);
+  budgetCommitmentsPercentage = Math.round(budgetCommitmentsAmount/budgetTotal*100);
+  budgetFreePercentage = 100 - budgetSavingPercentage - budgetHouseholdPercentage
+    - budgetTransportPercentage - budgetGroceriesPercentage - budgetCommitmentsPercentage;
+
+  if (budgetTotal === NaN) {
+
+  }
+
+  budgetGraphSaving.style.minHeight = `${3*budgetSavingPercentage}px`;
+  budgetResultSaving.textContent = `Saving: £${budgetSavingAmount} (${budgetSavingPercentage}%)`;
+  budgetGraphSaving.style.backgroundColor = "#0044ff";
+  budgetResultSaving.style.color = "#0044ff";
+  budgetGraphSaving.style.color = "#0044ff";
+
+  budgetGraphHousehold.style.minHeight = `${3*budgetHouseholdPercentage}px`;
+  budgetResultHousehold.textContent = `Household: £${budgetHouseholdAmount} (${budgetHouseholdPercentage}%)`;
+  budgetGraphHousehold.style.backgroundColor = "#ff8000";
+  budgetResultHousehold.style.color = "#ff8000";
+  budgetGraphHousehold.style.color = "#ff8000";
+
+  budgetGraphTransport.style.minHeight = `${3*budgetTransportPercentage}px`;
+  budgetResultTransport.textContent = `Transport: £${budgetTransportAmount} (${budgetTransportPercentage}%)`;
+  budgetGraphTransport.style.backgroundColor = "#7300b5";
+  budgetResultTransport.style.color = "#7300b5";
+  budgetGraphTransport.style.color = "#7300b5";
+
+  budgetGraphGroceries.style.minHeight = `${3*budgetGroceriesPercentage}px`;
+  budgetResultGroceries.textContent = `Groceries: £${budgetGroceriesAmount} (${budgetGroceriesPercentage}%)`;
+  budgetGraphGroceries.style.backgroundColor = "#12b800";
+  budgetResultGroceries.style.color = "#12b800";
+  budgetGraphGroceries.style.color = "#12b800";
+
+  budgetGraphCommitments.style.minHeight = `${3*budgetCommitmentsPercentage}px`;
+  budgetResultCommitments.textContent = `Commitments: £${budgetCommitmentsAmount} (${budgetCommitmentsPercentage}%)`;
+  budgetGraphCommitments.style.backgroundColor = "#ed0020";
+  budgetResultCommitments.style.color = "#ed0020";
+  budgetGraphCommitments.style.color = "#ed0020";
+
+  budgetGraphFree.style.minHeight = `${3*budgetFreePercentage}px`;
+  budgetResultFree.textContent = `Free to use: £${budgetFreeAmount} (${budgetFreePercentage}%)`;
+  budgetGraphFree.style.backgroundColor = "#ff00ae";
+  budgetResultFree.style.color = "#ff00ae";
+  budgetGraphFree.style.color = "#ff00ae";
+
   budgetInputBox.classList.add("hide");
   budgetOutputBox.classList.remove("hide");
 });
