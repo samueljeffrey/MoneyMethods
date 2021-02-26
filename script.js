@@ -276,10 +276,6 @@ budgetGoButton.addEventListener("click", function() {
   budgetFreePercentage = 100 - budgetSavingPercentage - budgetHouseholdPercentage
     - budgetTransportPercentage - budgetGroceriesPercentage - budgetCommitmentsPercentage;
 
-  if (budgetTotal === NaN) {
-
-  }
-
   budgetGraphSaving.style.minHeight = `${3*budgetSavingPercentage}px`;
   budgetResultSaving.textContent = `Saving: £${budgetSavingAmount} (${budgetSavingPercentage}%)`;
   budgetGraphSaving.style.backgroundColor = "#0044ff";
