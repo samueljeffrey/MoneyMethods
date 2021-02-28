@@ -6,6 +6,7 @@ const taxInputBox = document.querySelector("#tax-input");
 const taxGoButton = document.querySelector(".tax-input-button");
 const taxOutputBox = document.querySelector("#tax-output");
 const taxBackButton = document.querySelector(".tax-back-button");
+const taxErrorButton = document.querySelector(".tax-error-button");
 const taxYearlyButton = document.querySelector("#tax-timeframe-yearly");
 const taxMonthlyButton = document.querySelector("#tax-timeframe-monthly");
 const taxWeeklyButton = document.querySelector("#tax-timeframe-weekly");
@@ -18,6 +19,8 @@ const taxNetResult = document.querySelector("#tax-net");
 let taxGrossIncome;
 let afterIncomeTax;
 let taxNetIncome;
+const taxErrorBox = document.querySelector("#tax-error");
+const taxErrorText = document.querySelector(".tax-error-message");
 
 
 
@@ -27,6 +30,7 @@ const interestInputBox = document.querySelector("#interest-input");
 const interestGoButton = document.querySelector(".interest-input-button");
 const interestOutputBox = document.querySelector("#interest-output");
 const interestBackButton = document.querySelector(".interest-back-button");
+const interestErrorButton = document.querySelector(".interest-error-button")
 const interestCompoundButton = document.querySelector("#interest-choice-compound");
 const interestSimpleButton = document.querySelector("#interest-choice-simple");
 const interestExtra = document.querySelector("#interest-extra");
@@ -42,6 +46,8 @@ let interestTotal;
 let interestDuration;
 let interestFactor;
 let interestSimpleStatus = false;
+const interestErrorBox = document.querySelector("#interest-error");
+const interestErrorText = document.querySelector(".interest-error-message");
 
 
 
@@ -52,6 +58,7 @@ const budgetGoButton = document.querySelector(".budget-input-button");
 const budgetCopyButton = document.querySelector(".budget-extra-button");
 const budgetOutputBox = document.querySelector("#budget-output");
 const budgetBackButton = document.querySelector(".budget-back-button");
+const budgetErrorButton = document.querySelector(".budget-error-button");
 const budgetIncomeInput = document.getElementById("budget-income-input");
 const budgetSavingInput = document.getElementById("budget-saving-input");
 const budgetHouseholdInput = document.getElementById("budget-household-input");
@@ -83,7 +90,8 @@ const budgetResultTransport = document.querySelector(".budget-result-transport")
 const budgetResultGroceries = document.querySelector(".budget-result-groceries");
 const budgetResultCommitments = document.querySelector(".budget-result-commitments");
 const budgetResultFree = document.querySelector(".budget-result-free");
-const budgetResults = document.querySelector(".budget-results-divided");
+const budgetErrorBox = document.querySelector("#budget-error");
+const budgetErrorText = document.querySelector(".budget-error-message");
 
 
 
@@ -96,6 +104,9 @@ const original = function() {
   taxOutputBox.classList.add("hide");
   interestOutputBox.classList.add("hide");
   budgetOutputBox.classList.add("hide");
+  taxErrorBox.classList.add("hide");
+  interestErrorBox.classList.add("hide");
+  budgetErrorBox.classList.add("hide");
   interestCompoundButton.style.backgroundColor = "#fc7703";
   interestSimpleStatus = false;
 };
@@ -108,42 +119,51 @@ original();
 
 taxGoButton.addEventListener("click", function() {
   taxGrossIncome = 0;
-  if (taxTimeframe.value === "week") {
-    taxGrossIncome += 52*taxSalary.value.replace(",", "").replace("£", "");
-  } else if (taxTimeframe.value === "month") {
-    taxGrossIncome += 12*taxSalary.value.replace(",", "").replace("£", "");
-  } else {
-    taxGrossIncome = Number(taxSalary.value.replace(",", "").replace("£", ""));
-  }
-  taxGrossResult.textContent = Math.round(taxGrossIncome);
-  afterIncomeTax = taxGrossIncome;
-  if (taxGrossIncome >= 150000) {
-    afterIncomeTax -= (0.45*(taxGrossIncome-150000));
-    afterIncomeTax -= 40000;
-    afterIncomeTax -= 7500;
-  } else if (taxGrossIncome >= 50001 && taxGrossIncome < 150000) {
-    afterIncomeTax -= (0.4*(taxGrossIncome-50001));
-    afterIncomeTax -= 7500;
-  } else if (taxGrossIncome >= 12501) {
-    afterIncomeTax -= (0.2*(taxGrossIncome-12501));
-  } else {
+  if (Number(taxSalary.value) > 0) {
+    if (taxTimeframe.value === "week") {
+      taxGrossIncome += 52*taxSalary.value.replace(",", "").replace("£", "");
+    } else if (taxTimeframe.value === "month") {
+      taxGrossIncome += 12*taxSalary.value.replace(",", "").replace("£", "");
+    } else {
+      taxGrossIncome = Number(taxSalary.value.replace(",", "").replace("£", ""));
+    }
+    taxGrossResult.textContent = Math.round(taxGrossIncome);
     afterIncomeTax = taxGrossIncome;
-  }
-  taxIncomeTaxResult.textContent = Math.round(taxGrossIncome-afterIncomeTax);
-  if (taxGrossIncome/52 > 962) {
-    taxNetIncome = afterIncomeTax - (52*(((taxGrossIncome/52-962)*0.02)+779*0.12));
-  } else if (taxGrossIncome/52 <= 962 && taxGrossIncome/52 >= 183) {
-    taxNetIncome = afterIncomeTax - (52*(taxGrossIncome/52-183)*0.12);
+    if (taxGrossIncome >= 150000) {
+      afterIncomeTax -= (0.45*(taxGrossIncome-150000));
+      afterIncomeTax -= 40000;
+      afterIncomeTax -= 7500;
+    } else if (taxGrossIncome >= 50001 && taxGrossIncome < 150000) {
+      afterIncomeTax -= (0.4*(taxGrossIncome-50001));
+      afterIncomeTax -= 7500;
+    } else if (taxGrossIncome >= 12501) {
+      afterIncomeTax -= (0.2*(taxGrossIncome-12501));
+    } else {
+      afterIncomeTax = taxGrossIncome;
+    }
+    taxIncomeTaxResult.textContent = Math.round(taxGrossIncome-afterIncomeTax);
+    if (taxGrossIncome/52 > 962) {
+      taxNetIncome = afterIncomeTax - (52*(((taxGrossIncome/52-962)*0.02)+779*0.12));
+    } else if (taxGrossIncome/52 <= 962 && taxGrossIncome/52 >= 183) {
+      taxNetIncome = afterIncomeTax - (52*(taxGrossIncome/52-183)*0.12);
+    } else {
+      taxNetIncome = afterIncomeTax;
+    }
+    taxNIResult.textContent = Math.round(afterIncomeTax-taxNetIncome);
+    taxNetResult.textContent = Math.round(taxNetIncome);
+    taxYearlyButton.style.backgroundColor = "#f5f120";
+    taxMonthlyButton.style.backgroundColor = "#ffffff";
+    taxWeeklyButton.style.backgroundColor = "#ffffff";
+    taxInputBox.classList.add("hide");
+    taxOutputBox.classList.remove("hide");
+
   } else {
-    taxNetIncome = afterIncomeTax;
+    taxInputBox.classList.add("hide");
+    taxErrorBox.classList.remove("hide");
+    taxErrorText.textContent = `Your gross income must be a numerical
+    value above 0.`;
   }
-  taxNIResult.textContent = Math.round(afterIncomeTax-taxNetIncome);
-  taxNetResult.textContent = Math.round(taxNetIncome);
-  taxYearlyButton.style.backgroundColor = "#f5f120";
-  taxMonthlyButton.style.backgroundColor = "#ffffff";
-  taxWeeklyButton.style.backgroundColor = "#ffffff";
-  taxInputBox.classList.add("hide");
-  taxOutputBox.classList.remove("hide");
+
 });
 
 taxYearlyButton.addEventListener("click", function() {
@@ -181,6 +201,11 @@ taxBackButton.addEventListener("click", function() {
   taxInputBox.classList.remove("hide");
 });
 
+taxErrorButton.addEventListener("click", function() {
+  taxErrorBox.classList.add("hide");
+  taxInputBox.classList.remove("hide");
+});
+
 
 
 // INTEREST BUTTON CLICKS
@@ -209,42 +234,63 @@ interestGoButton.addEventListener("click", function() {
     interestTotal = (1 + interestRate/100)*interestInitial;
     interestValue = interestTotal-interestInitial;
 
-    document.querySelector("#interest-starting").textContent = interestInitial.toFixed(2);
-    document.querySelector("#interest-amount").textContent = interestValue.toFixed(2);
-    document.querySelector("#interest-ending").textContent = interestTotal.toFixed(2);
-    document.querySelector(".percentage-sentence").classList.add("hide");
+    if (interestInitial > 0 && interestRate > 0) {
+      document.querySelector("#interest-starting").textContent = interestInitial.toFixed(2);
+      document.querySelector("#interest-amount").textContent = interestValue.toFixed(2);
+      document.querySelector("#interest-ending").textContent = interestTotal.toFixed(2);
+      document.querySelector(".percentage-sentence").classList.add("hide");
+      interestOutputBox.classList.remove("hide");
+
+    } else {
+      interestErrorBox.classList.remove("hide");
+      interestErrorText.textContent = `Initial amount and interest rate must
+      be numerical values above 0.`;
+    }
+
 
   } else {
     interestValue = 0;
     interestDuration = interestDurationInput.value/12;
     interestFactor = 1 + (interestRate/100);
 
-    if (interestCompoundInput.value === "year") {
-      interestTotal = interestInitial * Math.pow(interestFactor, interestDuration);
-    } else if (interestCompoundInput.value === "quarter") {
-      interestTotal = interestInitial * Math.pow((interestFactor-1)/4+1, interestDuration*4);
-    } else if (interestCompoundInput.value === "month") {
-      interestTotal = interestInitial * Math.pow((interestFactor-1)/12+1, interestDuration*12);
-    } else if (interestCompoundInput.value === "week") {
-      interestTotal = interestInitial * Math.pow((interestFactor-1)/52+1, interestDuration*52);
-    } else if (interestCompoundInput.value === "day") {
-      interestTotal = interestInitial * Math.pow((interestFactor-1)/365+1, interestDuration*365);
-    }
+    if (interestRate > 0 && interestInitial > 0 && interestDuration > 0) {
+      if (interestCompoundInput.value === "year") {
+        interestTotal = interestInitial * Math.pow(interestFactor, interestDuration);
+      } else if (interestCompoundInput.value === "quarter") {
+        interestTotal = interestInitial * Math.pow((interestFactor-1)/4+1, interestDuration*4);
+      } else if (interestCompoundInput.value === "month") {
+        interestTotal = interestInitial * Math.pow((interestFactor-1)/12+1, interestDuration*12);
+      } else if (interestCompoundInput.value === "week") {
+        interestTotal = interestInitial * Math.pow((interestFactor-1)/52+1, interestDuration*52);
+      } else if (interestCompoundInput.value === "day") {
+        interestTotal = interestInitial * Math.pow((interestFactor-1)/365+1, interestDuration*365);
+      }
 
-    interestValue = interestTotal - interestInitial;
-    document.querySelector("#interest-starting").textContent = interestInitial.toFixed(2);
-    document.querySelector("#interest-amount").textContent = interestValue.toFixed(2);
-    document.querySelector("#interest-ending").textContent = interestTotal.toFixed(2);
-    document.querySelector("#interest-rise").textContent = ((interestValue/interestInitial)*100).toFixed(1);
-    document.querySelector(".percentage-sentence").classList.remove("hide");
+      interestValue = interestTotal - interestInitial;
+      document.querySelector("#interest-starting").textContent = interestInitial.toFixed(2);
+      document.querySelector("#interest-amount").textContent = interestValue.toFixed(2);
+      document.querySelector("#interest-ending").textContent = interestTotal.toFixed(2);
+      document.querySelector("#interest-rise").textContent = ((interestValue/interestInitial)*100).toFixed(1);
+      document.querySelector(".percentage-sentence").classList.remove("hide");
+      interestOutputBox.classList.remove("hide");
+
+      } else {
+      interestErrorBox.classList.remove("hide");
+      interestErrorText.textContent = `Initial amount, interest rate, and duration
+      must all be numerical values above 0.`;
+    }
   }
 
   interestInputBox.classList.add("hide");
-  interestOutputBox.classList.remove("hide");
 });
 
 interestBackButton.addEventListener("click", function() {
   interestOutputBox.classList.add("hide");
+  interestInputBox.classList.remove("hide");
+});
+
+interestErrorButton.addEventListener("click", function() {
+  interestErrorBox.classList.add("hide");
   interestInputBox.classList.remove("hide");
 });
 
@@ -273,50 +319,70 @@ budgetGoButton.addEventListener("click", function() {
   budgetTransportPercentage = Math.round(budgetTransportAmount/budgetTotal*100);
   budgetGroceriesPercentage = Math.round(budgetGroceriesAmount/budgetTotal*100);
   budgetCommitmentsPercentage = Math.round(budgetCommitmentsAmount/budgetTotal*100);
-  budgetFreePercentage = 100 - budgetSavingPercentage - budgetHouseholdPercentage
-    - budgetTransportPercentage - budgetGroceriesPercentage - budgetCommitmentsPercentage;
+  budgetFreePercentage = (100 - budgetSavingPercentage - budgetHouseholdPercentage
+    - budgetTransportPercentage - budgetGroceriesPercentage - budgetCommitmentsPercentage);
 
-  budgetGraphSaving.style.minHeight = `${3*budgetSavingPercentage}px`;
-  budgetResultSaving.textContent = `Saving: £${budgetSavingAmount} (${budgetSavingPercentage}%)`;
-  budgetGraphSaving.style.backgroundColor = "#0044ff";
-  budgetResultSaving.style.color = "#0044ff";
-  budgetGraphSaving.style.color = "#0044ff";
+  if (!budgetTotal > 0) {
+    budgetErrorBox.classList.remove("hide");
+    budgetErrorText.textContent = `Your net monthly income must be a numerical value above 0.`;
+    budgetOutputBox.classList.add("hide");
 
-  budgetGraphHousehold.style.minHeight = `${3*budgetHouseholdPercentage}px`;
-  budgetResultHousehold.textContent = `Household: £${budgetHouseholdAmount} (${budgetHouseholdPercentage}%)`;
-  budgetGraphHousehold.style.backgroundColor = "#ff8000";
-  budgetResultHousehold.style.color = "#ff8000";
-  budgetGraphHousehold.style.color = "#ff8000";
+  } else if (budgetFreeAmount < 0) {
+    budgetErrorBox.classList.remove("hide");
+    budgetErrorText.textContent = `You are already £${-budgetFreeAmount} over
+    budget with your essential spending.`;
+    budgetOutputBox.classList.add("hide");
 
-  budgetGraphTransport.style.minHeight = `${3*budgetTransportPercentage}px`;
-  budgetResultTransport.textContent = `Transport: £${budgetTransportAmount} (${budgetTransportPercentage}%)`;
-  budgetGraphTransport.style.backgroundColor = "#7300b5";
-  budgetResultTransport.style.color = "#7300b5";
-  budgetGraphTransport.style.color = "#7300b5";
+  } else {
+    budgetGraphSaving.style.minHeight = `${3*budgetSavingPercentage}px`;
+    budgetResultSaving.textContent = `Saving: £${budgetSavingAmount} (${budgetSavingPercentage}%)`;
+    budgetGraphSaving.style.backgroundColor = "#0044ff";
+    budgetResultSaving.style.color = "#0044ff";
+    budgetGraphSaving.style.color = "#0044ff";
 
-  budgetGraphGroceries.style.minHeight = `${3*budgetGroceriesPercentage}px`;
-  budgetResultGroceries.textContent = `Groceries: £${budgetGroceriesAmount} (${budgetGroceriesPercentage}%)`;
-  budgetGraphGroceries.style.backgroundColor = "#12b800";
-  budgetResultGroceries.style.color = "#12b800";
-  budgetGraphGroceries.style.color = "#12b800";
+    budgetGraphHousehold.style.minHeight = `${3*budgetHouseholdPercentage}px`;
+    budgetResultHousehold.textContent = `Household: £${budgetHouseholdAmount} (${budgetHouseholdPercentage}%)`;
+    budgetGraphHousehold.style.backgroundColor = "#ff8000";
+    budgetResultHousehold.style.color = "#ff8000";
+    budgetGraphHousehold.style.color = "#ff8000";
 
-  budgetGraphCommitments.style.minHeight = `${3*budgetCommitmentsPercentage}px`;
-  budgetResultCommitments.textContent = `Commitments: £${budgetCommitmentsAmount} (${budgetCommitmentsPercentage}%)`;
-  budgetGraphCommitments.style.backgroundColor = "#ed0020";
-  budgetResultCommitments.style.color = "#ed0020";
-  budgetGraphCommitments.style.color = "#ed0020";
+    budgetGraphTransport.style.minHeight = `${3*budgetTransportPercentage}px`;
+    budgetResultTransport.textContent = `Transport: £${budgetTransportAmount} (${budgetTransportPercentage}%)`;
+    budgetGraphTransport.style.backgroundColor = "#7300b5";
+    budgetResultTransport.style.color = "#7300b5";
+    budgetGraphTransport.style.color = "#7300b5";
 
-  budgetGraphFree.style.minHeight = `${3*budgetFreePercentage}px`;
-  budgetResultFree.textContent = `Free to use: £${budgetFreeAmount} (${budgetFreePercentage}%)`;
-  budgetGraphFree.style.backgroundColor = "#ff00ae";
-  budgetResultFree.style.color = "#ff00ae";
-  budgetGraphFree.style.color = "#ff00ae";
+    budgetGraphGroceries.style.minHeight = `${3*budgetGroceriesPercentage}px`;
+    budgetResultGroceries.textContent = `Groceries: £${budgetGroceriesAmount} (${budgetGroceriesPercentage}%)`;
+    budgetGraphGroceries.style.backgroundColor = "#12b800";
+    budgetResultGroceries.style.color = "#12b800";
+    budgetGraphGroceries.style.color = "#12b800";
+
+    budgetGraphCommitments.style.minHeight = `${3*budgetCommitmentsPercentage}px`;
+    budgetResultCommitments.textContent = `Commitments: £${budgetCommitmentsAmount} (${budgetCommitmentsPercentage}%)`;
+    budgetGraphCommitments.style.backgroundColor = "#ed0020";
+    budgetResultCommitments.style.color = "#ed0020";
+    budgetGraphCommitments.style.color = "#ed0020";
+
+    budgetGraphFree.style.minHeight = `${3*budgetFreePercentage}px`;
+    budgetResultFree.textContent = `Free to use: £${budgetFreeAmount} (${budgetFreePercentage}%)`;
+    budgetGraphFree.style.backgroundColor = "#ff00ae";
+    budgetResultFree.style.color = "#ff00ae";
+    budgetGraphFree.style.color = "#ff00ae";
+
+    budgetErrorBox.classList.add("hide");
+    budgetOutputBox.classList.remove("hide");
+  }
 
   budgetInputBox.classList.add("hide");
-  budgetOutputBox.classList.remove("hide");
 });
 
 budgetBackButton.addEventListener("click", function() {
   budgetOutputBox.classList.add("hide");
+  budgetInputBox.classList.remove("hide");
+});
+
+budgetErrorButton.addEventListener("click", function() {
+  budgetErrorBox.classList.add("hide");
   budgetInputBox.classList.remove("hide");
 });
