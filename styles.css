@@ -126,6 +126,11 @@ hr {
   outline: none;
 }
 
+.error {
+  background-color: #f5f120;
+  padding: 10px;
+}
+
 
 
 /* TAX */
